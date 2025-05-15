@@ -1,7 +1,6 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useState } from "react";
 import Home from "./pages/Homes";
-import AddJob from "./pages/AddJob";
 import JobDetails from "./pages/JobDetails";
 import "./App.css";
 
