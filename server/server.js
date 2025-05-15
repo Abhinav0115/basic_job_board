@@ -3,10 +3,21 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import jobRoutes from "./routes/jobs.js";
+import path from "path";
+import { fileURLToPath } from "url";
 
 dotenv.config();
 
 const app = express();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Serve static files from the Vite build output
+app.use(express.static(path.resolve(__dirname, "dist")));
+
+// Handle SPA fallback
+app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "dist", "index.html"));
+});
 
 app.use(
     cors({
