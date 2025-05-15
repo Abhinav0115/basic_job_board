@@ -8,7 +8,11 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+app.use(
+    cors({
+        origin: "https://mini-jobboard.netlify.app/",
+    })
+);
 app.use(express.json());
 
 app.use("/api/jobs", jobRoutes);

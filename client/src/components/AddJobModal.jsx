@@ -9,9 +9,13 @@ const AddJobModal = ({ onClose, onJobAdded }) => {
         type: "",
         location: "",
         description: "",
+        companyEmail: "",
+        companyAddress: "",
+        companyDescription: "",
     });
 
     const [error, setError] = useState("");
+    const [showCompanyDetails, setShowCompanyDetails] = useState(false);
 
     const handleChange = (e) => {
         setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -50,7 +54,7 @@ const AddJobModal = ({ onClose, onJobAdded }) => {
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white rounded-lg w-full max-w-lg p-6 relative shadow-lg">
+            <div className="bg-white rounded-lg w-full max-w-lg p-6 relative shadow-lg max-h-[90vh] overflow-y-auto">
                 <button
                     onClick={onClose}
                     className="absolute top-3 right-3 text-gray-500 hover:text-black"
@@ -89,7 +93,7 @@ const AddJobModal = ({ onClose, onJobAdded }) => {
                         name="type"
                         value={formData.type}
                         onChange={handleChange}
-                        className="w-full border p-2 rounded-md outline-emerald-800 xyzx"
+                        className="w-full border p-2 rounded-md outline-emerald-800"
                     >
                         <option disabled value="">
                             Select Job Type*
@@ -113,6 +117,53 @@ const AddJobModal = ({ onClose, onJobAdded }) => {
                         onChange={handleChange}
                         className="w-full border p-2 rounded-md h-28 resize-none outline-emerald-800"
                     ></textarea>
+
+                    {/* Toggle Company Details */}
+                    <div
+                        className="flex items-center justify-between cursor-pointer select-none border-t pt-3"
+                        onClick={() =>
+                            setShowCompanyDetails(!showCompanyDetails)
+                        }
+                    >
+                        <span className="text-emerald-700 font-medium">
+                            {showCompanyDetails
+                                ? "Hide Company Details"
+                                : "Add Company Details"}
+                        </span>
+                        {showCompanyDetails ? (
+                            <ChevronUp size={20} />
+                        ) : (
+                            <ChevronDown size={20} />
+                        )}
+                    </div>
+
+                    {showCompanyDetails && (
+                        <div className="space-y-3">
+                            <input
+                                type="email"
+                                name="companyEmail"
+                                placeholder="Company Email"
+                                value={formData.companyEmail}
+                                onChange={handleChange}
+                                className="w-full border p-2 rounded-md outline-emerald-800"
+                            />
+                            <input
+                                type="text"
+                                name="companyAddress"
+                                placeholder="Company Address"
+                                value={formData.companyAddress}
+                                onChange={handleChange}
+                                className="w-full border p-2 rounded-md outline-emerald-800"
+                            />
+                            <textarea
+                                name="companyDescription"
+                                placeholder="Company Description"
+                                value={formData.companyDescription}
+                                onChange={handleChange}
+                                className="w-full border p-2 rounded-md resize-none outline-emerald-800"
+                            ></textarea>
+                        </div>
+                    )}
 
                     <button
                         type="submit"
