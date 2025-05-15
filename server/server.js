@@ -11,6 +11,12 @@ dotenv.config();
 const app = express();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+// Serve correct MIME for .js and .jsx files
+app.get(["*.js", "*.jsx"], (req, res, next) => {
+    res.type("application/javascript");
+    next();
+});
+
 // Serve static files from the Vite build output
 app.use(express.static(path.resolve(__dirname, "dist")));
 
@@ -18,6 +24,8 @@ app.use(express.static(path.resolve(__dirname, "dist")));
 app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "dist", "index.html"));
 });
+
+
 
 app.use(
     cors({
